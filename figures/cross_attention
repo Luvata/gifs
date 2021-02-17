@@ -1,0 +1,27 @@
+digraph {
+	graph [label=AttentionAddNorm labelloc=t]
+	inp_1 [shape=ellipse]
+	inp_2 [shape=ellipse]
+	"inp_mask.1" [shape=ellipse]
+	.216 [label="Q_proj (Linear)" shape=box]
+	inp_1 -> .216
+	.217 [label="K_proj (Linear)" shape=box]
+	inp_2 -> .217
+	.218 [label="V_proj (Linear)" shape=box]
+	inp_2 -> .218
+	.219 [label="dropout (Dropout)" shape=box]
+	"input.30" [label="div matmul pow softmax
+masked_fill" shape=box style=rounded]
+	.216 -> "input.30"
+	"inp_mask.1" -> "input.30"
+	.218 -> "input.30"
+	.217 -> "input.30"
+	"input.30" -> .219
+	.220 [label="layer_norm (LayerNorm)" shape=box]
+	"input.31" [label=add shape=box style=rounded]
+	inp_1 -> "input.31"
+	.219 -> "input.31"
+	"input.31" -> .220
+	out_0 [shape=ellipse]
+	.220 -> out_0
+}

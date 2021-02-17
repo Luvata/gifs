@@ -1,0 +1,37 @@
+digraph {
+	graph [label=EncoderBlock labelloc=t]
+	inp_1 [shape=ellipse]
+	"inp_mask.1" [shape=ellipse]
+	inp_1 -> "self_attention.inp_1"
+	"inp_mask.1" -> "self_attention.inp_mask.1"
+	subgraph "cluster_.7" {
+		label="self_attention (AttentionAddNorm)"
+		"self_attention.inp_1" [shape=ellipse]
+		"self_attention.inp_mask.1" [shape=ellipse]
+		"self_attention..215" [label="self_attention.Q_proj (Linear)" shape=box]
+		"self_attention.inp_1" -> "self_attention..215"
+		"self_attention..216" [label="self_attention.K_proj (Linear)" shape=box]
+		"self_attention.inp_1" -> "self_attention..216"
+		"self_attention..217" [label="self_attention.V_proj (Linear)" shape=box]
+		"self_attention.inp_1" -> "self_attention..217"
+		"self_attention..218" [label="self_attention.dropout (Dropout)" shape=box]
+		"self_attention.input.5" [label="pow softmax matmul masked_fill
+div" shape=box style=rounded]
+		"self_attention.inp_mask.1" -> "self_attention.input.5"
+		"self_attention..217" -> "self_attention.input.5"
+		"self_attention..216" -> "self_attention.input.5"
+		"self_attention..215" -> "self_attention.input.5"
+		"self_attention.input.5" -> "self_attention..218"
+		"self_attention..219" [label="self_attention.layer_norm (LayerNorm)" shape=box]
+		"self_attention.input.6" [label=add shape=box style=rounded]
+		"self_attention..218" -> "self_attention.input.6"
+		"self_attention.inp_1" -> "self_attention.input.6"
+		"self_attention.input.6" -> "self_attention..219"
+		"self_attention.out_0" [shape=ellipse]
+		"self_attention..219" -> "self_attention.out_0"
+	}
+	.8 [label="feed_forward (FeedForwardAddNorm)" shape=box]
+	"self_attention.out_0" -> .8
+	out_0 [shape=ellipse]
+	.8 -> out_0
+}

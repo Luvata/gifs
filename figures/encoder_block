@@ -1,0 +1,12 @@
+digraph {
+	graph [label=EncoderBlock labelloc=t]
+	inp_1 [shape=ellipse]
+	"inp_mask.1" [shape=ellipse]
+	.7 [label="self_attention (AttentionAddNorm)" shape=box]
+	inp_1 -> .7
+	"inp_mask.1" -> .7
+	.8 [label="feed_forward (FeedForwardAddNorm)" shape=box]
+	.7 -> .8
+	out_0 [shape=ellipse]
+	.8 -> out_0
+}

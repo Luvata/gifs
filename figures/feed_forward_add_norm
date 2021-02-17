@@ -1,0 +1,19 @@
+digraph {
+	graph [label=FeedForwardAddNorm labelloc=t]
+	inp_1 [shape=ellipse]
+	.14 [label="linear1 (Linear)" shape=box]
+	inp_1 -> .14
+	.15 [label="activation (ReLU)" shape=box]
+	.14 -> .15
+	.16 [label="linear2 (Linear)" shape=box]
+	.15 -> .16
+	.17 [label="dropout (Dropout)" shape=box]
+	.16 -> .17
+	.18 [label="layer_norm (LayerNorm)" shape=box]
+	"input.36" [label=add shape=box style=rounded]
+	.17 -> "input.36"
+	inp_1 -> "input.36"
+	"input.36" -> .18
+	out_0 [shape=ellipse]
+	.18 -> out_0
+}
